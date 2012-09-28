@@ -1,0 +1,37 @@
+<project 
+    xmlns             ="http://maven.apache.org/POM/4.0.0" 
+    xmlns:xsi         ="http://www.w3.org/2001/XMLSchema-instance"
+     
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0    http://maven.apache.org/maven-v4_0_0.xsd"
+>
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.expedia.archetype.maven.java.application.web.~~~{archetype.new-project-name}</groupId>
+        <artifactId>~~~{archetype.new-project-name}-parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../parent</relativePath>
+    </parent>
+
+    <artifactId>~~~{archetype.new-project-name}-external-resources</artifactId>
+<!--  TODO revisit packaging for this module -->
+    <packaging>jar</packaging>
+    
+    <properties>
+        <!--  NOTE: this module contains sql scripts that have a placeholder for tuning sql user password behaviors by environment - use true|false values to tune with each application install -->
+        <external-resources.sql.setDevelopmentPasswordForUsers>true</external-resources.sql.setDevelopmentPasswordForUsers>
+    </properties>
+    
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!-- we need to filter the external resources to give values to placeholders such as sql setDevelopmentPasswordForusers -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+    
+</project>

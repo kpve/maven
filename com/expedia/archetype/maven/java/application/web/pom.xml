@@ -1,0 +1,116 @@
+<project 
+    xmlns             ="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd" 
+>
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.expedia</groupId>
+        <artifactId>expedia-parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath />                             <!-- NOTE: empty value indicates to not resolve the parent path locally as opposed to the default ../pom.xml -->
+    </parent>
+
+    <groupId>com.expedia.archetype.maven.java.application.web</groupId>
+    <artifactId>application-web</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+
+    <profiles>
+        <profile>
+            <id>com.expedia.archetype.maven.java.application.web.usage</id>
+            <activation>
+                <property>
+                    <name>!archetype.new-project-name</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>validate</phase>
+                                <configuration>
+                                    <target>
+                                        <concat>
+                                            <fileset file="help.txt" />
+                                        </concat>
+                                    </target>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>com.expedia.archetype.maven.java.application.web..run-archetype</id>
+            <activation>
+                <property>
+                    <name>archetype.new-project-name</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>copy-and-filter-archetype-for-new-project</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <includeEmptyDirs>true</includeEmptyDirs>
+                                    <overwrite>true</overwrite>
+                                    <outputDirectory>${project.build.directory}/${archetype.new-project-name}</outputDirectory>
+                                    <useDefaultDelimiters>false</useDefaultDelimiters>
+                                    <delimiters>
+                                        <delimiter>~~~{*}</delimiter>
+                                    </delimiters>
+                                    <!-- NOTE: IMPORTANT - make sure the parent pom has configured the resources plugin to NOT filter binary types such as .jks keystores as the filtering can corrupt them! -->
+                                    <resources>
+                                        <resource>
+                                            <directory>${project.basedir}/src/main/resources</directory>
+                                            <filtering>true</filtering>
+                                        </resource>
+                                        <resource>
+                                            <directory>${project.basedir}/src/test/resources</directory>
+                                            <filtering>false</filtering>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>validate</phase>
+                                <configuration>
+                                    <target>
+                                        <echo>Your project has been created in the target directory, please refer to the "help" command below for further instructions:</echo>
+                                        <concat>
+                                            <fileset file="${project.build.directory}/${archetype.new-project-name}/help.txt" />
+                                        </concat>
+                                    </target>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+</project>

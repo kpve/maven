@@ -1,0 +1,112 @@
+<project 
+    xmlns             ="http://maven.apache.org/POM/4.0.0" 
+    xmlns:xsi         ="http://www.w3.org/2001/XMLSchema-instance"
+     
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0    http://maven.apache.org/maven-v4_0_0.xsd"
+>
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.expedia.archetype.maven.java.application.web.~~~{archetype.new-project-name}</groupId>
+        <artifactId>~~~{archetype.new-project-name}-parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../parent</relativePath>
+    </parent>
+
+    <artifactId>~~~{archetype.new-project-name}-web</artifactId>
+    <packaging>war</packaging>
+
+    <profiles>
+        <profile>
+            <id>com.expedia.archetype.maven.java.application.web.~~~{archetype.new-project-name}.web.start-webapp</id>
+            <activation>
+                <property>
+                    <name>start-webapp</name>
+                </property>
+            </activation>
+		    <build>
+		        <plugins>
+		            <plugin>
+		                <groupId>org.mortbay.jetty</groupId>
+		                <artifactId>maven-jetty-plugin</artifactId>
+		                <executions>
+		                    <execution>
+		                        <id>start-jetty</id>
+		                        <phase>package</phase>
+		                        <goals>
+		                            <goal>run</goal>
+		                        </goals>
+		                        <configuration>
+						            <contextPath>~~~{archetype.new-project-name}</contextPath>
+						            <daemon>false</daemon>
+						            <!-- configure unsecure and secure ports -->
+						            <connectors>
+						                <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
+						                    <port>9090</port>
+						                    <maxIdleTime>60000</maxIdleTime>
+						                </connector>
+						                <connector implementation="org.mortbay.jetty.security.SslSocketConnector">
+						                    <port>9443</port>
+						                    <keystore>${basedir}/../external-resources/target/classes/package/dev-sandbox/configuration/ssl/keystore.jks</keystore>
+						                    <keyPassword>changeit</keyPassword>
+						                    <password>changeit</password>
+						                </connector>
+						            </connectors>
+						            <systemProperties>
+						                <systemProperty>
+						                    <!-- enable jmx agent -->
+						                    <name>com.sun.management.jmxremote</name>
+						                    <value />
+						                </systemProperty>
+						            </systemProperties>
+		                        </configuration>
+		                    </execution>
+		                    <execution>
+		                        <id>stop-jetty</id>
+		                        <phase>package</phase>
+		                        <goals>
+		                            <goal>stop</goal>
+		                        </goals>
+        		                <configuration>
+		                            <stopPort>9091</stopPort>
+		                            <stopKey>test</stopKey>
+		                        </configuration>
+		                    </execution>
+		                </executions>
+		            </plugin>
+		        </plugins>
+		    </build>
+		</profile>
+	</profiles>
+
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>~~~{archetype.new-project-name}-service</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+        </dependency>
+<!-- 
+        <dependency>
+            <groupId>com.expedia.commons</groupId>
+            <artifactId>expedia-commons-servlet</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.expedia.commons</groupId>
+            <artifactId>expedia-commons-spring-web</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
+    </dependencies>
+
+    
+</project>
+

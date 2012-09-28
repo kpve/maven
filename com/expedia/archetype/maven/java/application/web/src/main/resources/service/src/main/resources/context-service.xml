@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans     xmlns="http://www.springframework.org/schema/beans" 
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context" 
+        xmlns:cxf="http://cxf.apache.org/core"
+        xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+        xmlns:jaxws="http://cxf.apache.org/jaxws"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                            http://cxf.apache.org/core                  http://cxf.apache.org/schemas/core.xsd
+                            http://cxf.apache.org/jaxrs                 http://cxf.apache.org/schemas/jaxrs.xsd
+                            http://cxf.apache.org/jaxws                 http://cxf.apache.org/schemas/jaxws.xsd"
+>   
+
+    <!-- import contexts for application modules the service module has dependencies on -->     
+    <import resource="classpath*:context-common.xml"          />
+    <import resource="classpath*:context-commons-servlet.xml" />
+    
+    <!-- TODO remove hello and goodbye world service provided by the archetype -->
+    <bean id="helloWorldServiceImplRest" class="com.expedia.archetype.maven.java.application.web.service.restful.HelloWorldServiceImpl" >
+        <constructor-arg index="0" >
+            <null/>
+        </constructor-arg>
+        <constructor-arg index="1" value="${worldRestServiceUri}" />
+    </bean>
+    <jaxrs:server id="restfulServer" address="/rest" >
+        <jaxrs:serviceBeans>
+            <ref bean="helloWorldServiceImplRest"   />
+        </jaxrs:serviceBeans>        
+    </jaxrs:server>
+    
+    <jaxws:client
+        id="helloWorldServiceClient"
+        serviceClass="com.expedia.archetype.maven.java.application.web.service.soap.HelloWorldSoapService"
+        address="${helloWorldSoapEndpoint}"
+    />
+    <bean id="helloWorldServiceImplSoap" class="com.expedia.archetype.maven.java.application.web.service.soap.HelloWorldServiceImpl" />
+    <jaxws:endpoint 
+        id          ="helloWorldEndPoint" 
+        implementor ="#helloWorldServiceImplSoap" 
+        address     ="/soap/helloWorld/1.0"  
+    />
+
+</beans>
+
+

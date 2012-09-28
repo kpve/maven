@@ -1,0 +1,79 @@
+-------------------------------------------------------------------------------
+                                    HELP
+-------------------------------------------------------------------------------
+
+
+Getting Started Development Sandbox Instructions
+-------------------------------------------------------------------------------
+
+1) Make sure the expedia parent pom is in your local maven repository 
+   (com.expedia:expedia-parent).
+
+2) cd target\[new project name]
+
+   mvn clean package -Dstart-webapp
+
+3) Confirm the web app is running by trying the index page:
+
+   http://localhost:9090/
+   
+   Click on the standard jetty link to get to your app's welcome page:
+   
+   http://localhost:9090/[new project name]
+   
+4) cntrl-c in your shell to kill the jetty process running the web app.
+
+
+Some Useful Maven Commands             Description
+-------------------------------------------------------------------------------
+mvn validate -Dhelp -N                 This ;)
+
+mvn clean package                      Builds the web app including unit tests.
+
+mvn clean package -Dstart-webapp       Builds and starts the web application as
+                                       a daemon to the build process. The app's
+                                       welcome page is 
+                                       http://localhost:9090/[new project name]
+
+mvn clean verify                       Builds and starts the web app, runs 
+                                       integration tests and then shuts down 
+                                       the web app.
+                                       
+                                       !!! TODO The archetype's hello world 
+                                       integration test is currently failing,
+                                       so if anyone wants to help, ahem, 
+                                       and fix it that would be great!
+
+mvn clean package -Dinstall-package    Builds the web app and installs the 
+                                       application package to the corporate
+                                       standard location just like in non-dev
+                                       environments.  Look in /expedia/[app name]
+                                       for the installed package.  Any web app
+                                       container should be able to run the 
+                                       war installed there.  Note that this 
+                                       uses the package resources in 
+                                       the project's external resources module
+                                       dev-sandbox package.
+                                       
+mvn validate -Ddependency-support      Copies project dependencies and creates
+                                       dependency reports in all modules target
+                                       directories.  Very helpful for debugging
+                                       api issues with and generating legal
+                                       requests for third party apis. 
+                                       
+                                       NOTE: depending on your project
+                                       this command may need a successful
+                                       mvn install in order to read the app
+                                       module information from your local repo
+                                       as it does not read them from the project
+                                       workspace.
+                                       
+                                       
+                                       
+General maven commands, plugins etc should work.  For more info take a look
+at the corporate pom.
+
+
+
+                                       
+                                     
