@@ -10,7 +10,7 @@ Instructions:
     2) Run the archetype:
 
        cd [archetype home] 
-       mvn clean validate -Darchetype.new-project-name=[name]
+       mvn clean package -Darchetype.new-project.maven-group-id=[group id] -Darchetype.new-project.name=[name]
        
        
        NOTE: The archetype depends on the corporate pom com.expedia:expedia-parent.
