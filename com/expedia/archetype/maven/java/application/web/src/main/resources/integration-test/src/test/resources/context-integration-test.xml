@@ -13,7 +13,7 @@
         <property name="locations" >
             <list>
                 <value>classpath*:integration-test.default.properties</value>
-                <value>/expedia/~~~{archetype.new-project-name}/integration-test.override.properties</value>
+                <value>/expedia/~~~{archetype.new-project.name}/integration-test.override.properties</value>
             </list>
         </property>
     </bean>

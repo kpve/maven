@@ -7,24 +7,24 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.expedia.archetype.maven.java.application.web.~~~{archetype.new-project-name}</groupId>
-        <artifactId>~~~{archetype.new-project-name}-parent</artifactId>
+        <groupId>~~~{archetype.new-project.maven-group-id}.~~~{archetype.new-project.name}</groupId>
+        <artifactId>~~~{archetype.new-project.name}-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
         <relativePath>../parent</relativePath>
     </parent>
 
-    <artifactId>~~~{archetype.new-project-name}-service</artifactId>
+    <artifactId>~~~{archetype.new-project.name}-service</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>~~~{archetype.new-project-name}-common</artifactId>
+            <artifactId>~~~{archetype.new-project.name}-common</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>~~~{archetype.new-project-name}-contract</artifactId>
+            <artifactId>~~~{archetype.new-project.name}-contract</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
@@ -71,7 +71,7 @@
 -->
 <dependency>
    <groupId>${project.groupId}</groupId>
-   <artifactId>~~~{archetype.new-project-name}-client</artifactId>
+   <artifactId>~~~{archetype.new-project.name}-client</artifactId>
    <version>${project.version}</version>
 </dependency>
     </dependencies>

@@ -55,25 +55,20 @@ mvn clean package -Dinstall-package    Builds the web app and installs the
                                        the project's external resources module
                                        dev-sandbox package.
                                        
-mvn validate -Ddependency-support      Copies project dependencies and creates
+mvn install -Ddependency-support       Copies project dependencies and creates
                                        dependency reports in all modules target
                                        directories.  Very helpful for debugging
                                        api issues with and generating legal
                                        requests for third party apis. 
                                        
-                                       NOTE: depending on your project
-                                       this command may need a successful
-                                       mvn install in order to read the app
-                                       module information from your local repo
-                                       as it does not read them from the project
-                                       workspace.
-                                       
+                                       !!! TODO The archetype's hello world 
+                                       integration test is currently failing,
+                                       which blocks this command so if anyone 
+                                       wants to help, ahem, and fix it that 
+                                       would be great!
                                        
                                        
 General maven commands, plugins etc should work.  For more info take a look
 at the corporate pom.
 
 
-
-                                       
-                                     

@@ -13,13 +13,14 @@
         <relativePath /> <!-- NOTE: empty value indicates to not resolve the parent path locally as opposed to the default ../pom.xml -->
     </parent>
 
-    <groupId>com.expedia.archetype.maven.java.application.web.~~~{archetype.new-project-name}</groupId>
-    <artifactId>~~~{archetype.new-project-name}-parent</artifactId>
+    <groupId>~~~{archetype.new-project.maven-group-id}.~~~{archetype.new-project.name}</groupId>
+    <artifactId>~~~{archetype.new-project.name}-parent</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <application.name>~~~{archetype.new-project-name}</application.name>
+        <application.group-id-path>~~~{}</application.group-id-path>
+        <application.name>~~~{archetype.new-project.name}</application.name>
     </properties>
 
 </project>
