@@ -1,6 +1,5 @@
 package com.expedia.archetype.maven.java.application.web.client.restful;
 
-import java.io.ByteArrayInputStream;
 import java.net.URI;
 
 import javax.ws.rs.core.UriBuilder;
@@ -92,7 +91,7 @@ public class HelloWorldClient implements HelloWorldService
 String helloResponse = httpMethod.getResponseBodyAsString();
 hello = this.unmarshall( Hello.class, new ByteArrayInputStream( helloResponse.getBytes() ) );            
 */
-            hello = this.unmarshall( Hello.class, httpMethod.getResponseBodyAsStream() );
+            hello = HelloWorldClient.unmarshall( Hello.class, httpMethod.getResponseBodyAsStream() );
         }
         catch( RuntimeException re )
         {
@@ -125,7 +124,7 @@ hello = this.unmarshall( Hello.class, new ByteArrayInputStream( helloResponse.ge
 String worldResponse = httpMethod.getResponseBodyAsString();
 world = this.unmarshall( World.class, new ByteArrayInputStream( worldResponse.getBytes() ) );
 */
-            world = this.unmarshall( World.class, httpMethod.getResponseBodyAsStream() );
+            world = HelloWorldClient.unmarshall( World.class, httpMethod.getResponseBodyAsStream() );
         }
         catch( RuntimeException re )
         {

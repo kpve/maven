@@ -1,15 +1,11 @@
 package com.expedia.archetype.maven.java.application.web.service.soap;
 
-import javax.jws.WebMethod;
-import javax.jws.WebService;
-
-import com.expedia.archetype.maven.java.application.web.contract.HelloWorldService;
-import com.expedia.archetype.maven.java.application.web.contract.World;
-import com.expedia.archetype.maven.java.application.web.contract.Hello;
-//import com.expedia.commons.debug.DebugUtilities;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.expedia.archetype.maven.java.application.web.contract.Hello;
+import com.expedia.archetype.maven.java.application.web.contract.World;
+//import com.expedia.commons.debug.DebugUtilities;
 
 public class HelloWorldServiceImpl implements HelloWorldSoapService
 {
@@ -39,6 +35,8 @@ public class HelloWorldServiceImpl implements HelloWorldSoapService
     {
         Hello hello = new Hello( name + "\nDon't forget to check the logs for a remote invocation of getWorld() to demonstrate logging correlation id transport :)" );
 
+        this.getLogger().info( "getHello(" + name + ") is returning " + hello );
+        
         return hello;
     }
     
