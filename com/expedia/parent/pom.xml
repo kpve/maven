@@ -4,15 +4,15 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0           http://maven.apache.org/xsd/maven-4.0.0.xsd" 
 >
      <!-- NOTE: 
-         This pom file is the root of the expedia project object model inheritance chain.  It contains standard information and behaviors         
-         most expedia projects should use to promote standardization, consistency, compatibility and so on.  These are nice things but there are
+         This pom file is the root of the corporate project object model inheritance chain.  It contains standard information and behaviors         
+         most corporate projects should use to promote standardization, consistency, compatibility and so on.  These are nice things but there are
          limits to what can be achieved without becoming overbearing on project implementations (heavy, constrictive etc.) The goal should be
          to provide core value but allow project the flexibility to do deviate and supplement with good reason.  
          
          Some of the more important things included are:
            - common third party dependency versions: This is only for commonly used or wide impacting third party dependencies. Things like apache commons, junit, spring, jaxb, or 
                                                      libraries that impact compatibility across code bases (think serialization, caching etc.)
-                                                     This is nice because it creates a foundation for common behavior, compatibility, etc across expedia code bases.
+                                                     This is nice because it creates a foundation for common behavior, compatibility, etc across corporate code bases.
            - maven plugin configurations           : This is nice because it helps create standard projects that look and act the same that everyone can work with pretty easily :)
            - maven profiles                        : Same as maven plugiin configs...
            
@@ -39,8 +39,8 @@
 
         <!-- distribution and repositories -->
         <!--  NOTE: these default values all provided as properties so developers can easily work with other repositories by just changing  -->
-        <!-- TODO some day our repo should be this:  http://expedia-central/... -->
-        <mvn.repository.expedia-central.url>http://repo1.maven.org/maven2/</mvn.repository.expedia-central.url>
+        <!-- TODO some day our repo should be this:  http://corporate-central/... -->
+        <mvn.repository.corporate-central.url>http://repo1.maven.org/maven2/</mvn.repository.corporate-central.url>
 
         <!-- third party dependency versions -->
         <version.log4j>1.2.16</version.log4j>
@@ -63,7 +63,7 @@
         
         <!-- behaviors -->
         <!--     corporate  -->
-    <expedia.install.location>/expedia</expedia.install.location>
+        <corporate.install.location>/expedia</corporate.install.location>
 
         <!--     project -->        
         <project.build.dependency-directory>${project.build.directory}/dependency/</project.build.dependency-directory>

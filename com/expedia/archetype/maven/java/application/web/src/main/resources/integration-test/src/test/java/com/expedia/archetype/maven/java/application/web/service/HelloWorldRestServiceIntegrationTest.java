@@ -2,16 +2,19 @@ package com.expedia.archetype.maven.java.application.web.service;
 
 import java.net.URI;
 
-import com.expedia.archetype.maven.java.application.web.client.restful.HelloWorldClient;
-import com.expedia.archetype.maven.java.application.web.contract.Hello;
-import com.expedia.archetype.maven.java.application.web.contract.World;
-import com.expedia.archetype.maven.java.application.web.service.restful.HelloWorldServiceImpl;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import com.expedia.archetype.maven.java.application.web.client.restful.HelloWorldClient;
+import com.expedia.archetype.maven.java.application.web.contract.Hello;
+import com.expedia.archetype.maven.java.application.web.contract.World;
+import com.expedia.archetype.maven.java.application.web.service.HelloWorldRestServiceIntegrationTest;
+import com.expedia.archetype.maven.java.application.web.service.restful.HelloWorldServiceImpl;
 
 @RunWith( SpringJUnit4ClassRunner.class )
 @ContextConfiguration
@@ -20,16 +23,24 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 )
 public class HelloWorldRestServiceIntegrationTest
 {
-    private URI helloWorldRestServiceUri;
+    private static Logger            LOGGER                                        = LoggerFactory.getLogger( HelloWorldRestServiceIntegrationTest.class );
+    private static URI               helloWorldRestServiceUri;
+    private static String            helloMessage;
+    private static String            worldMessage;
+    
+    // NOTE: spring seems to be a bit fickle with injecting unit tests, particulary with properties values via @Value but using MethodInvokingFactoryBean on a static setTestData method seems to work well
+    public static void setTestData( URI helloWorldRestServiceUri, String helloMessage, String worldMessage )
+    {
+        HelloWorldRestServiceIntegrationTest.helloWorldRestServiceUri = helloWorldRestServiceUri ;
+        HelloWorldRestServiceIntegrationTest.helloMessage             = helloMessage;
+        HelloWorldRestServiceIntegrationTest.worldMessage             = worldMessage;
+        
+        HelloWorldRestServiceIntegrationTest.LOGGER.info( "helloWorldRestServiceUri=" + HelloWorldRestServiceIntegrationTest.helloWorldRestServiceUri );
+    }
     
     // grrr junit requires test classes to have one empty constructor :( so please make setters public and inject via spring property instead of constructor arg :(  
     public HelloWorldRestServiceIntegrationTest()
     {
-    }
-    
-    public void setHelloWorldRestServiceUri( URI helloWorldRestServiceUri )
-    {
-        this.helloWorldRestServiceUri = helloWorldRestServiceUri;
     }
     
     @Test
@@ -39,11 +50,12 @@ public class HelloWorldRestServiceIntegrationTest
         String name = "foo";
         
         // set controls
-        Hello controlGetHelloResult = new HelloWorldServiceImpl().getHello( name );
-        World controlGetWorldResult = new HelloWorldServiceImpl().getWorld( name );
+        HelloWorldServiceImpl helloWorldService     = new HelloWorldServiceImpl( null, HelloWorldRestServiceIntegrationTest.helloMessage, HelloWorldRestServiceIntegrationTest.worldMessage );
+        Hello                 controlGetHelloResult = helloWorldService.getHello( name );
+        World                 controlGetWorldResult = helloWorldService.getWorld( name );
         
         // test
-        HelloWorldClient helloWorldClient = new HelloWorldClient( this.helloWorldRestServiceUri );
+        HelloWorldClient helloWorldClient = new HelloWorldClient( HelloWorldRestServiceIntegrationTest.helloWorldRestServiceUri );
         Hello testGetHelloResult = helloWorldClient.getHello( name );
         World testGetWorldResult = helloWorldClient.getWorld( name );
         
@@ -51,5 +63,6 @@ public class HelloWorldRestServiceIntegrationTest
         Assert.assertEquals( controlGetHelloResult, testGetHelloResult );
         Assert.assertEquals( controlGetWorldResult, testGetWorldResult );
     }
+
 }
 

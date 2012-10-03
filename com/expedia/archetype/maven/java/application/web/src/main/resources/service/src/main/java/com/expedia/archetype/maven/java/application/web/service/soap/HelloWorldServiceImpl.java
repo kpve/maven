@@ -5,44 +5,62 @@ import org.slf4j.LoggerFactory;
 
 import com.expedia.archetype.maven.java.application.web.contract.Hello;
 import com.expedia.archetype.maven.java.application.web.contract.World;
-//import com.expedia.commons.debug.DebugUtilities;
 
 public class HelloWorldServiceImpl implements HelloWorldSoapService
 {
-    private Logger logger;
+    private Logger    logger;
+    private String    helloMessage;
+    private String    worldMessage;
     
     public HelloWorldServiceImpl()
     {
-        this( null );
-    }
-
-    public HelloWorldServiceImpl( Logger logger )
-    {
-        this.setLogger( logger );
+        this( null, null, null );
     }
     
-    public void setLogger( Logger logger )
+    public HelloWorldServiceImpl( Logger logger, String helloMessage, String worldMessage )
     {
-        this.logger = ( logger == null ? LoggerFactory.getLogger( this.getClass() ) : logger );
+        this.setLogger      ( logger       );
+        this.setHelloMessage( helloMessage );
+        this.setWorldMessage( worldMessage );
+    }
+    
+    private void setLogger( Logger logger )
+    {
+        if( logger == null )
+        {
+            this.logger = LoggerFactory.getLogger( this.getClass() );
+            this.logger.warn( "Undefined logger provided, substituing default: " + this );
+        }
+        else
+        {
+            this.logger = logger;
+        }
     }
 
-    private Logger getLogger()
+    private void setHelloMessage( String helloMessage )
     {
-        return this.logger;
+        this.helloMessage = helloMessage;
+    }
+    
+    private void setWorldMessage( String worldMessage )
+    {
+        this.worldMessage = worldMessage;
     }
     
     public Hello getHello( String name )
     {
-        Hello hello = new Hello( name + "\nDon't forget to check the logs for a remote invocation of getWorld() to demonstrate logging correlation id transport :)" );
-
-        this.getLogger().info( "getHello(" + name + ") is returning " + hello );
+        Hello hello = new Hello( this.helloMessage, name );
+        
+        this.logger.info( "hey, look the logger woks: " + hello );
         
         return hello;
     }
     
     public World getWorld( String name )
     {
-        World world = new World( name );
+        World world = new World( this.worldMessage, name );
+        
+        this.logger.info( "hey, look the logger woks: " + world );
         
         return world;
     }

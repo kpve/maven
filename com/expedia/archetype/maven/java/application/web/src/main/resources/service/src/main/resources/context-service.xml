@@ -17,28 +17,35 @@
     <import resource="classpath*:context-commons-servlet.xml" />
     
     <!-- TODO remove hello and goodbye world service provided by the archetype -->
-    <bean id="helloWorldServiceImplRest" class="com.expedia.archetype.maven.java.application.web.service.restful.HelloWorldServiceImpl" >
-        <constructor-arg index="0" >
+    <bean id="com_expedia_archetype_maven_java_application_web_service_rest_HelloWorldServiceImpl" class="com.expedia.archetype.maven.java.application.web.service.restful.HelloWorldServiceImpl" >
+        <constructor-arg name="logger" >
             <null/>
         </constructor-arg>
-        <constructor-arg index="1" value="${worldRestServiceUri}" />
+        <constructor-arg name="helloMessage" value="${com_expedia_archetype_maven_java_application_web_service_rest_HelloWorldServiceImpl_helloMessage}" />
+        <constructor-arg name="worldMessage" value="${com_expedia_archetype_maven_java_application_web_service_rest_HelloWorldServiceImpl_worldMessage}" />
     </bean>
-    <jaxrs:server id="restfulServer" address="/rest" >
+    <jaxrs:server id="com_expedia_archetype_maven_java_application_web_service_rest_HelloWorldService" address="/rest" >
         <jaxrs:serviceBeans>
-            <ref bean="helloWorldServiceImplRest"   />
+            <ref bean="com_expedia_archetype_maven_java_application_web_service_rest_HelloWorldServiceImpl" />
         </jaxrs:serviceBeans>        
     </jaxrs:server>
     
     <jaxws:client
-        id="helloWorldServiceClient"
+        id="com_expedia_archetype_maven_java_application_web_service_soap_HelloWorldServiceClient"
         serviceClass="com.expedia.archetype.maven.java.application.web.service.soap.HelloWorldSoapService"
-        address="${helloWorldSoapEndpoint}"
+        address="${com_expedia_archetype_maven_java_application_web_service_soap_HelloWorldService_address}"
     />
-    <bean id="helloWorldServiceImplSoap" class="com.expedia.archetype.maven.java.application.web.service.soap.HelloWorldServiceImpl" />
+    <bean id="com_expedia_archetype_maven_java_application_web_service_soap_HelloWorldServiceImpl" class="com.expedia.archetype.maven.java.application.web.service.soap.HelloWorldServiceImpl" >
+        <constructor-arg name="logger" >
+            <null/>
+        </constructor-arg>
+        <constructor-arg name="helloMessage" value="${com_expedia_archetype_maven_java_application_web_service_soap_HelloWorldServiceImpl_helloMessage}" />
+        <constructor-arg name="worldMessage" value="${com_expedia_archetype_maven_java_application_web_service_soap_HelloWorldServiceImpl_worldMessage}" />
+    </bean>
     <jaxws:endpoint 
-        id          ="helloWorldEndPoint" 
-        implementor ="#helloWorldServiceImplSoap" 
-        address     ="/soap/helloWorld/1.0"  
+        id          ="com_expedia_archetype_maven_java_application_web_service_soap_HelloWorldService" 
+        implementor ="#com_expedia_archetype_maven_java_application_web_service_soap_HelloWorldServiceImpl" 
+        address     ="${com_expedia_archetype_maven_java_application_web_service_soap_HelloWorldService_address}"  
     />
 
 </beans>

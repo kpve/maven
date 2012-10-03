@@ -22,10 +22,6 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath:applicationContext.xml</param-value>
     </context-param>
-    <context-param>
-        <param-name>log4jConfigLocation</param-name>
-        <param-value>file:/expedia/~~~{archetype.new-project.name}/configuration/log4j.properties</param-value>
-    </context-param>
 
     <!--  NOTE: this property turns off spring's org.springframework.web.util.Log4jWebConfigurer web app root feature (java docs for details)
                 which has some negative side effects in some containers (such as tomcat.)  The negative side effect we have seen most often
@@ -46,7 +42,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>CXFServlet</servlet-name>
-        <url-pattern>/service/*</url-pattern>
+        <url-pattern>/service/1.0/*</url-pattern>
     </servlet-mapping>
     
 </web-app>

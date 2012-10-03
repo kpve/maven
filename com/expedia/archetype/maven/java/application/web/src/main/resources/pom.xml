@@ -29,7 +29,6 @@
         <module>common</module>
         <module>service</module>
         <module>web</module>    
-        <module>install</module>
         <module>integration-test</module>
         <module>client</module>
         <module>documentation</module>

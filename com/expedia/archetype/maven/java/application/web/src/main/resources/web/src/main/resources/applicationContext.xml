@@ -9,13 +9,27 @@
     <!-- load application properties    NOTE: this should be done BEFORE any other spring wirings because they may need this information -->
     <bean id="com_expedia_service_userreviews_loaderservice_web_propertiesPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" >
         <property name="systemPropertiesModeName"       value="SYSTEM_PROPERTIES_MODE_OVERRIDE"                    />
-        <property name="ignoreResourceNotFound"         value="true"                                               />
+        <property name="ignoreResourceNotFound"         value="false"                                              />
         <property name="ignoreUnresolvablePlaceholders" value="false"                                              />
         <property name="order"                          value="0"                                                  />
         <property name="locations" >
             <list>
                 <value>classpath*:application.default.properties</value>
-                <value>${externalResourcesLocation}application.override.properties</value>
+                <value>file:/expedia/~~~{archetype.new-project.maven-group-id-path}/~~~{archetype.new-project.name}/current/configuration/application.override.properties</value>
+            </list>
+        </property>
+    </bean>
+    
+    <!-- configure log4j with an external properties file that is polled for changes  -->
+    <bean id="log4jInitialization" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetClass" value="org.springframework.util.Log4jConfigurer" />
+        <property name="targetMethod" value="initLogging" />
+        <property name="arguments">
+            <list>
+                <!-- log4j config file location -->
+                <value>file:/expedia/~~~{archetype.new-project.maven-group-id-path}/~~~{archetype.new-project.name}/current/configuration/log4j.properties</value>
+                <!-- log4j config file refresh polling interval -->
+                <value>10000</value>
             </list>
         </property>
     </bean>

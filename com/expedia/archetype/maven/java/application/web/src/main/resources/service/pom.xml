@@ -63,17 +63,6 @@
             <artifactId>commons-spring-web</artifactId>
         </dependency>
 -->
-<!-- TODO DELETE THIS DEPENDENCY!!!! NORMAL PROJECTS WILL NOT HAVE A SERVICE COMPONENT THAT HAS A DEPENDENCY ON THE SAME PROJECTS CLIENT COMPONENT!!!
-          THE ONLY REASON THIS PROJECT DOES IS TO DEMONSTRATE SERVICE TO SERVICE CALLS (REMOTE VIA HTTP) IN A SELF-CONTAINED WAY SINCE THE ARCHETYPE
-          SHOULD NOT HAVE DEPENDENCIES ON REAL PROJECTS (IN EFFECT THE SERVICES IN THE ARCHETYPE CALL THEMSELVES USING THEIR OWN CLIENT.
-          
-          DO NOT FOLLOW THIS PATTERN.
--->
-<dependency>
-   <groupId>${project.groupId}</groupId>
-   <artifactId>~~~{archetype.new-project.name}-client</artifactId>
-   <version>${project.version}</version>
-</dependency>
     </dependencies>
 
 </project>

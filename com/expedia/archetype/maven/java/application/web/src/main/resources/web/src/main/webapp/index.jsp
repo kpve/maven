@@ -11,11 +11,11 @@
         <br/>
         <hr/>
         <br/>
-        <a href="service/rest/hello/[your_name_here]">restful hello service</a>
+        <a href="service/1.0/rest/helloWorld/hello/[your_name_here]">restful hello service</a>
         <br/>
-        <a href="service/rest/world/[your_name_here]">restful world service</a>        
+        <a href="service/1.0/rest/helloWorld/world/[your_name_here]">restful world service</a>        
         <br/>
-        <a href="service/soap/helloWorld/1.0?wsdl">soap hello world service</a>        
+        <a href="service/1.0/soap/helloWorld/1.0?wsdl">soap hello world service</a>        
         <br/>
     </body>
 </html>

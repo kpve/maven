@@ -6,8 +6,8 @@
 Getting Started Development Sandbox Instructions
 -------------------------------------------------------------------------------
 
-1) Make sure the expedia parent pom is in your local maven repository 
-   (com.expedia:expedia-parent).
+1) Make sure the corporate parent pom is installed in your local maven 
+   repository.
 
 2) cd target\[new project name]
 
@@ -24,49 +24,59 @@ Getting Started Development Sandbox Instructions
 4) cntrl-c in your shell to kill the jetty process running the web app.
 
 
-Some Useful Maven Commands             Description
--------------------------------------------------------------------------------
-mvn validate -Dhelp -N                 This ;)
+Some Useful Maven Commands                 Description
+--------------------------------------------------------------------------------------------
 
-mvn clean package                      Builds the web app including unit tests.
+NOTE: All commands listed are intended to be run from the root of the project.
+      If you are maven savvy you can look at the poms, use help:effective-pom
+      etc. to run commands in child modules.  See the maven docs and plugin
+      docs for more info.
 
-mvn clean package -Dstart-webapp       Builds and starts the web application as
-                                       a daemon to the build process. The app's
-                                       welcome page is 
-                                       http://localhost:9090/[new project name]
 
-mvn clean verify                       Builds and starts the web app, runs 
-                                       integration tests and then shuts down 
-                                       the web app.
-                                       
-                                       !!! TODO The archetype's hello world 
-                                       integration test is currently failing,
-                                       so if anyone wants to help, ahem, 
-                                       and fix it that would be great!
+mvn validate -N                            Validates the root maven project and is 
+                                           a quick way to show the help menu (this).
 
-mvn clean package -Dinstall-package    Builds the web app and installs the 
-                                       application package to the corporate
-                                       standard location just like in non-dev
-                                       environments.  Look in /expedia/[app name]
-                                       for the installed package.  Any web app
-                                       container should be able to run the 
-                                       war installed there.  Note that this 
-                                       uses the package resources in 
-                                       the project's external resources module
-                                       dev-sandbox package.
+mvn clean package                          Builds the application modules and 
+                                           installs the application's external 
+                                           resources to the standard corporate location
+                                           just like in non-dev environments.
+                                           
+                                           The only exception is the war file
+                                           is not copied because jetty runs it from
+                                           your web module source files (this is
+                                           for quicker dev cycles).  See commands
+                                           below for how to actually install the 
+                                           war file as well.  
                                        
-mvn install -Ddependency-support       Copies project dependencies and creates
-                                       dependency reports in all modules target
-                                       directories.  Very helpful for debugging
-                                       api issues with and generating legal
-                                       requests for third party apis. 
+                                           Look in /application/[app name] to 
+                                           see the installed files.
+
+mvn clean package -Dinstall-application    Same as previous command plus also 
+                                           installs the application to the standard
+                                           corporate location so it can be run
+                                           by a container other than the maven jetty
+                                           plugin.
+
+mvn clean package -Dstart-webapp           Starts the web application as a daemon to
+                                           the build process. The app's welcome page 
+                                           is http://localhost:9090/[new project name]
+
+mvn clean verify                           Builds and starts the web app, runs 
+                                           integration tests and then shuts down 
+                                           the web app.
                                        
-                                       !!! TODO The archetype's hello world 
-                                       integration test is currently failing,
-                                       which blocks this command so if anyone 
-                                       wants to help, ahem, and fix it that 
-                                       would be great!
+mvn install -Ddependency-support           Copies project dependencies and creates
+                                           dependency reports in all modules target
+                                           directories.  Very helpful for debugging
+                                           api issues with and generating legal
+                                           requests for third party apis. 
                                        
+                                           NOTE: application modules have dependencies
+                                           on each other so its possible that this 
+                                           command will fail for some modules if 
+                                           other modules they depend have not been
+                                           built yet or failed to build 
+                                           (due to compilation errors for example.) 
                                        
 General maven commands, plugins etc should work.  For more info take a look
 at the corporate pom.

@@ -19,8 +19,14 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <application.group-id-path>~~~{}</application.group-id-path>
-        <application.name>~~~{archetype.new-project.name}</application.name>
+        <!-- NOTE:
+             - installation properties are used by multiple child modules
+             - default installation dev sandbox external resources for developer/qa work
+         -->
+        <application.install.package>dev-sandbox</application.install.package>
+        <application.install.location>${corporate.install.location}/~~~{archetype.new-project.maven-group-id-path}/~~~{archetype.new-project.name}</application.install.location>
+        <application.install.version.location>${application.install.location}/${project.version}</application.install.version.location>
+        <application.install.current.location>${application.install.location}/current</application.install.current.location>
     </properties>
-
+    
 </project>

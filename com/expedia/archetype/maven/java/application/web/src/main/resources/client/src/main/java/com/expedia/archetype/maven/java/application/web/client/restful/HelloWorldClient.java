@@ -143,7 +143,7 @@ world = this.unmarshall( World.class, new ByteArrayInputStream( worldResponse.ge
     // NOTE this is just a convenience main to allow testing the client against a running service   
     public static void main( String[] args ) throws Exception
     {
-        URI serviceURI = new URI( "http://localhost:9090/test-web/service" );
+        URI serviceURI = new URI( "http://localhost:9090/TODO" );
         HelloWorldClient helloWorldClient = new HelloWorldClient( serviceURI );
         
         Hello hello = helloWorldClient.getHello( "foo" );

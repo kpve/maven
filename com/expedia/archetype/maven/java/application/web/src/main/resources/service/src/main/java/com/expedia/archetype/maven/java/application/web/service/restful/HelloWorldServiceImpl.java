@@ -9,32 +9,27 @@ import javax.ws.rs.Produces;
 
 import com.expedia.archetype.maven.java.application.web.contract.HelloWorldService;
 import com.expedia.archetype.maven.java.application.web.contract.World;
-import com.expedia.archetype.maven.java.application.web.client.restful.HelloWorldClient;
 import com.expedia.archetype.maven.java.application.web.contract.Hello;
-//import com.expedia.commons.debug.DebugUtilities;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class HelloWorldServiceImpl implements HelloWorldService
 {
-    private Logger      logger;
-    private String      serviceUri;
+    private Logger    logger;
+    private String    helloMessage;
+    private String    worldMessage;
     
     public HelloWorldServiceImpl()
     {
-        this( null );
+        this( null, null, null );
     }
     
-    public HelloWorldServiceImpl( String serviceUri )
+    public HelloWorldServiceImpl( Logger logger, String helloMessage, String worldMessage )
     {
-        this( null, serviceUri );
-    }
-    
-    public HelloWorldServiceImpl( Logger logger, String serviceUri )
-    {
-        this.setLogger     ( logger     );
-        this.setServiceUri ( serviceUri );
+        this.setLogger      ( logger       );
+        this.setHelloMessage( helloMessage );
+        this.setWorldMessage( worldMessage );
     }
     
     private void setLogger( Logger logger )
@@ -50,62 +45,42 @@ public class HelloWorldServiceImpl implements HelloWorldService
         }
     }
 
-    private Logger getLogger()
+    private void setHelloMessage( String helloMessage )
     {
-        return this.logger;
+        this.helloMessage = helloMessage;
     }
-
-    public String getServiceUri()
+    
+    private void setWorldMessage( String worldMessage )
     {
-        return this.serviceUri;
-    }
-
-    private void setServiceUri( String serviceUri )
-    {
-        this.serviceUri = serviceUri;
-    }
-
-    private void httpGetWorld( String name )
-    {
-        try
-        {
-            // get the world resource
-            URI worldServiceURI = new URI( this.getServiceUri() );
-            HelloWorldClient helloWorldClient =  new HelloWorldClient( worldServiceURI );
-            World world = helloWorldClient.getWorld( name );
-            this.getLogger().info( "world response: " + world );
-            world = new World( name );                        
-        }
-        catch( Exception e  )
-        {
-            this.getLogger().error( "Remote invocation of world operation at " + this.getServiceUri() + " failed: \n " + e.getMessage() );// TODO dependency not available yet DebugUtilities.getStackTraceAsString( e ) );
-        }
+        this.worldMessage = worldMessage;
     }
     
     @GET
-    @Path( "/hello/{name}" )
+    @Path( "helloWorld/hello/{name}" )
     @Produces("application/xml")
     @Override
     public Hello getHello( @PathParam( "name" )String name )
     {
-        Hello hello = new Hello( name );
+        Hello hello = new Hello( this.helloMessage, name );
         
-        // demonstrate invoking one rest service from another
-        this.httpGetWorld( name );
+        this.logger.info( "hey, look the logger woks: " + hello );
         
         return hello;
     }
 
     @GET
-    @Path( "/world/{name}" )
+    @Path( "helloWorld/world/{name}" )
     @Produces("application/xml")
     @Override
     public World getWorld( @PathParam( "name" )String name )
     {
-        World world = new World( name );
+        World world = new World( this.worldMessage, name );
+        
+        this.logger.info( "hey, look the logger woks: " + world );
         
         return world;
     }
+    
 }
 
 

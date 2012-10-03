@@ -13,12 +13,9 @@ Instructions:
        mvn clean package -Darchetype.new-project.maven-group-id=[group id] -Darchetype.new-project.name=[name]
        
        
-       NOTE: The archetype depends on the corporate pom com.expedia:expedia-parent.
-             If you have network connectivity to expedia-central this dependency
-             will be downloaded to your local repository by maven automatically.
-             If you do not have network connectivity to expedia-central you can
-             check out corporate pom project and build it locally to get it into
-             your local repository.
+       NOTE: The archetype depends on the corporate pom.  You will need install this pom
+             into your local repository by checking out the corporate pom project from 
+             source control and building it with "mvn clean install".
 
     3) Start using the new project:
     
